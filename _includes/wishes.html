@@ -1,0 +1,77 @@
+<!-- HTML form -->
+<div class="container">
+	<h3 class="text-center">Ucapan & Doa</h3>
+	<form id="form_doa">
+		<div class="form-group margin-form">
+			<label>Nama</label>
+			<input class="form-control" type="text" id="doa-name" required/>
+		</div>
+		<div class="form-group margin-form">
+			<label>Ucapan & Doa</label>
+			<textarea class="form-control" rows="5" id="doa-content" required/></textarea>
+		</div>
+
+		<input type="submit" class="btn btn-dark" value="Kirim" />
+	</form>
+		<!-- <div class="col-sm-6 d-flex justify-content-start align-items-center backdrop-toast" aria-live="polite"> -->
+	<div id="wishes-toast-success" class="toast" role="status" aria-atomic="true" data-bs-delay=2500>
+		<div class="toast-body text-center">
+			Terima kasih atas ucapan & doanya! Semoga <span id="wishes-name-success" aria-hidden="true"></span> selalu dalam lindungan-Nya &#128591;&#127996;
+		</div>
+	</div>
+		<!-- </div> -->
+</div>
+
+<!-- Submit into GForm-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	// $(document).ready(function() {
+	//     $('#wishes-container-success').hide();
+	// });
+	
+	$('#form_doa').submit(function(e) {
+		var doa_name = $("#doa-name").val();
+		var doa_content = $("#doa-content").val();
+
+		e.preventDefault();
+		$.ajax({
+			url: 'https://docs.google.com/forms/u/2/d/e/1FAIpQLSdP5cWsTxrO1V3b7oD6nBdAO1-tOS_IJhwkqeZcdecaB9iG6g/formResponse',	
+			data: {
+				"entry.402107173": doa_name,
+				"entry.2119047668": doa_content
+				},
+			type: 'POST', 
+			dataType: "json",
+			statusCode: { 
+				0: function(data) {
+					//success
+					document.getElementById("wishes-name-success").innerHTML = doa_name;
+					$('#wishes-toast-success').toast("show");
+
+					document.querySelector("#form_doa").reset();
+
+					// $('#wishes-container-success').show();
+					// setTimeout(function(){
+					// 	document.getElementById('wishes-container-success').classList.remove('hide');
+					// }, 2500);			
+				}, 
+				200: function(data) {
+					//success
+					document.getElementById("wishes-name-success").innerHTML = doa_name;
+					$('#wishes-toast-success').toast("show");
+
+					document.querySelector("#form_doa").reset();
+
+					// setTimeout(function(){
+					// 	document.getElementById('wishes-container-success').classList.remove('hide');
+					// }, 2500);
+					// $('#wishes-container-success').hide();					
+				},
+				403: function(data) {
+					//error
+					alert('Error sending data');
+				}
+			}	
+		});
+	});
+</script>

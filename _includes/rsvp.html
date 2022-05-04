@@ -1,0 +1,125 @@
+ <!-- HTML form -->
+<div class="container">
+	<h3 class="text-center">RSVP</h3>
+	<form id="form_rsvp">
+		<div class="form-group margin-form">
+			<label>Nama</label>
+			<input class="form-control" name="entry.1263445216" type="text" id="rsvp-name" required/>
+		</div>
+		<div class="form-group margin-form">
+			<label>Asal/Instansi</label>
+			<input class="form-control" name="entry.595302699" type="text" id="rsvp-institution" required/>
+		</div>
+		<div class="form-group margin-form">
+			<label>Konfirmasi Kehadiran</label>
+			<div id="confirmation" class="row">
+				<div class="form-check">
+					<input type="radio" id="rsvp-yes" value="iya" name="rsvp" required/>
+					<label for="rsvp-yes">Ya</label>
+				</div>
+				<div class="form-check">
+					<input type="radio" id="rsvp-no" value="tidak" name="rsvp"/>
+					<label for="rsvp-no">Tidak</label>
+				</div>
+			</div>
+		</div>
+
+		<!-- Show kalau konfirmasi kehadiran = yes -->
+		<div id="n_guest" >
+			<div class="form-group margin-form">
+				<label>Jumlah Tamu</label>
+				<div class="col-sm-2">
+					<select class="form-select" id="rsvp-num" required>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<input type="submit" class="btn btn-dark" value="Kirim" />
+	</form>
+
+	<div id="rsvp-toast-success" class="toast" role="status" aria-atomic="true" data-bs-delay=2500>
+		<div class="toast-body text-center">
+			Terima kasih atas konfirmasinya! <span id="rsvp-yes-wording" aria-hidden="true"></span>
+		</div>
+	</div>
+</div>
+
+
+<!-- Submit into GForm-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+	    $('#n_guest').hide();
+	    // $('#rsvp-yes-wording').hide();
+	});
+	
+	$('#rsvp-yes').click(function() {
+		$('#n_guest').show();
+	});
+
+	$('#rsvp-no').click(function() {
+		$('#n_guest').hide();
+	});
+
+	$('#form_rsvp').submit(function(e) {
+		var rsvp_name = $("#rsvp-name").val();
+		var rsvp_institution = $("#rsvp-institution").val();
+		var rsvp_confirmation = $('input[name="rsvp"]:checked').val();
+		var rsvp_n = 0;
+
+		var rsvp_yes_wording1 = "Ditunggu kehadiran "
+		var rsvp_yes_wording2 = " 18 Juni 2020 nanti &#x1F60A;"
+
+		if (rsvp_confirmation == "iya") {			
+			rsvp_n = $("#rsvp-num").val();
+
+			// $('#rsvp-yes-wording').show();
+			document.getElementById("rsvp-yes-wording").innerHTML = rsvp_yes_wording1.concat(rsvp_name, rsvp_yes_wording2);
+		} else {
+			document.getElementById("rsvp-yes-wording").innerHTML = "&#128591;&#127996;"
+		}
+
+		e.preventDefault();
+		$.ajax({
+			url: 'https://docs.google.com/forms/d/e/1FAIpQLSeJUBoYL51uFV1KvVZovFr-0q_3GCIegI2ThVPTHOiSxhp-hw/formResponse', 
+			data: {
+				"entry.1263445216": rsvp_name,
+				"entry.595302699": rsvp_institution,
+				"entry.2124986218": rsvp_confirmation,
+				"entry.567330989": rsvp_n
+				},
+			type: 'POST', 
+			dataType: "json",
+			statusCode: { 
+				0: function(data) {
+					//success
+					$('#rsvp-toast-success').toast("show");
+					// document.getElementById("rsvp-yes-wording").innerHTML = ""
+
+					document.querySelector("#form_rsvp").reset();
+					$('#n_guest').hide();
+				}, 
+				200: function(data) {
+					//success
+					$('#rsvp-toast-success').toast("show");
+					// document.getElementById("rsvp-yes-wording").innerHTML = ""
+
+					document.querySelector("#form_rsvp").reset();
+					$('#n_guest').hide();
+				},
+				403: function(data) {
+					//error
+					alert('Error sending data');
+				}
+			} 
+		});
+	});
+</script>
