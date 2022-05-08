@@ -1,17 +1,21 @@
  <!-- HTML form -->
 <div class="container" data-aos="fade-up" data-aos-duration="1500">
-	<h3 class="text-center">RSVP</h3>
+	<h3 class="text-center subtitle">Pesan & Konfirmasi Kehadiran</h3>
 	<form id="form_rsvp">
 		<div class="form-group margin-form">
-			<label>Nama</label>
+			<label>Nama*</label>
 			<input class="form-control" name="entry.1263445216" type="text" id="rsvp-name" required/>
 		</div>
 		<div class="form-group margin-form">
-			<label>Asal/Instansi</label>
+			<label>Asal/Instansi*</label>
 			<input class="form-control" name="entry.595302699" type="text" id="rsvp-institution" required/>
 		</div>
 		<div class="form-group margin-form">
-			<label>Konfirmasi Kehadiran</label>
+			<label>Doa & Pesan</label>
+			<textarea class="form-control" rows="5" id="doa-content"/></textarea>
+		</div>
+		<div class="form-group margin-form">
+			<label>Konfirmasi Kehadiran*</label>
 			<div id="confirmation" class="row">
 				<div class="form-check">
 					<input type="radio" id="rsvp-yes" value="iya" name="rsvp" required/>
@@ -27,7 +31,7 @@
 		<!-- Show kalau konfirmasi kehadiran = yes -->
 		<div id="n_guest" >
 			<div class="form-group margin-form">
-				<label>Jumlah Tamu</label>
+				<label>Jumlah Tamu*</label>
 				<div class="col-sm-2">
 					<select class="form-select" id="rsvp-num" required>
 						<option value="1">1</option>
@@ -42,12 +46,13 @@
 			</div>
 		</div>
 
+		<p class="notes">*harus diisi</p>
 		<input type="submit" class="btn btn-dark" value="Kirim" />
 	</form>
 
 	<div id="rsvp-toast-success" class="toast" role="status" aria-atomic="true" data-bs-delay=2500>
 		<div class="toast-body text-center">
-			Terima kasih atas konfirmasinya! <span id="rsvp-yes-wording" aria-hidden="true"></span>
+			Terima kasih atas doa & konfirmasinya! <span id="rsvp-yes-wording" aria-hidden="true"></span>
 		</div>
 	</div>
 </div>
@@ -58,7 +63,6 @@
 <script>
 	$(document).ready(function() {
 	    $('#n_guest').hide();
-	    // $('#rsvp-yes-wording').hide();
 	});
 	
 	$('#rsvp-yes').click(function() {
@@ -72,6 +76,12 @@
 	$('#form_rsvp').submit(function(e) {
 		var rsvp_name = $("#rsvp-name").val();
 		var rsvp_institution = $("#rsvp-institution").val();
+
+		var doa_content = "N/A";
+		if ($("#doa-content").val() != "") {
+			doa_content = $("#doa-content").val();
+		}
+		
 		var rsvp_confirmation = $('input[name="rsvp"]:checked').val();
 		var rsvp_n = 0;
 
@@ -81,11 +91,12 @@
 		if (rsvp_confirmation == "iya") {			
 			rsvp_n = $("#rsvp-num").val();
 
-			// $('#rsvp-yes-wording').show();
 			document.getElementById("rsvp-yes-wording").innerHTML = rsvp_yes_wording1.concat(rsvp_name, rsvp_yes_wording2);
 		} else {
 			document.getElementById("rsvp-yes-wording").innerHTML = "&#128591;&#127996;"
 		}
+
+		console.log(doa_content)
 
 		e.preventDefault();
 		$.ajax({
@@ -93,6 +104,7 @@
 			data: {
 				"entry.1263445216": rsvp_name,
 				"entry.595302699": rsvp_institution,
+				"entry.142146872": doa_content,
 				"entry.2124986218": rsvp_confirmation,
 				"entry.567330989": rsvp_n
 				},
@@ -102,7 +114,6 @@
 				0: function(data) {
 					//success
 					$('#rsvp-toast-success').toast("show");
-					// document.getElementById("rsvp-yes-wording").innerHTML = ""
 
 					document.querySelector("#form_rsvp").reset();
 					$('#n_guest').hide();
@@ -110,7 +121,6 @@
 				200: function(data) {
 					//success
 					$('#rsvp-toast-success').toast("show");
-					// document.getElementById("rsvp-yes-wording").innerHTML = ""
 
 					document.querySelector("#form_rsvp").reset();
 					$('#n_guest').hide();

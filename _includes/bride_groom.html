@@ -1,25 +1,19 @@
 <div class="container">
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="groom text-end" data-aos="fade-right" data-aos-duration="1000">
-				<h2>{{site.groom}}</h2>
-				<p><i>Putra dari</i></p>
-				<p class="fs-5">{{site.groom_parent}}</p>
-			</div>
-		</div>
-	</div>
 	<div class="row d-flex justify-content-center">
-		<div class="col-sm-1 ampersand fs-1" data-aos="zoom-in" data-aos-duration="1000">
-			&
+		<div class="col-sm-5 text-end" data-aos="fade-left" data-aos-duration="1000">
+			<h2 class="bride-groom">{{site.bride}}</h2>
+			<p class="subtitle-bride-groom">Putri ketiga dari</p>
+			<p class="parent">{{site.bride_parent}}</p>
 		</div>
-	</div>
-	<div class="row d-flex justify-content-end">
-		<div class="col-sm-6">
-			<div class="bride text-start" data-aos="fade-left" data-aos-duration="1000">
-				<h2>{{site.bride}}</h2>
-				<p><i>Putri dari</i></p>
-				<p class="fs-5">{{site.bride_parent}}</p>
+		<div class="col-sm-1 d-flex text-center justify-content-center" data-aos="zoom-in" data-aos-duration="1000">
+			<div class="my-auto ampersand">
+				<span class="mx-auto">&</span>
 			</div>
+		</div>
+		<div class="col-sm-5 text-start" data-aos="fade-right" data-aos-duration="1000">
+				<h2 class="bride-groom">{{site.groom}}</h2>
+				<p class="subtitle-bride-groom">Putra kedua dari</p>
+				<p class="parent">{{site.groom_parent}}</p>
 		</div>
 	</div>
 </div>

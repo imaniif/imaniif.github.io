@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Mandali');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+@import url('https://fonts.googleapis.com/css?family=Noto+Naskh+Arabic');
 
 body {
     margin: 0;
@@ -7,13 +10,15 @@ body {
     line-height: 1.5;
     color: #555;
     font-family: 'Montserrat', sans-serif;
+    background: $main;
 }
 article, aside, figcaption, figure, footer, header, nav, section {
     display: block;
 }
 h1, h2, h3, h4, stong {
-    margin-top: 1em;
-    padding-top: 1em;
+    margin-top: 1.5em !important;
+    padding-top: .5em;
+    padding-bottom: .5em;
     line-height: 1.25;
     color: #333;
 }
@@ -41,4 +46,10 @@ a img {
 }
 sup, sub {
     line-height: 0;
+}
+
+.subtitle {
+  text-decoration: underline;
+  text-decoration-color: $yellow;
+  text-decoration-thickness: 5px;
 }

@@ -4,9 +4,21 @@
   margin-top: 100px;
   text-align: center;
   color: #FFF;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  .particles-js-canvas-el {
+    width:100% !important;
+    height:100vh !important;
+  }
   .tribute {
     color: #808080;
     font-size: 12px;
+  }
+  .motto {
+    color: #808080;
+    font-size: 18px;
+    font-family: "Dancing Script";
   }
   a {
     text-decoration: none;

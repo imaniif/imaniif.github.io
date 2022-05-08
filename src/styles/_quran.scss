@@ -1,15 +1,17 @@
+#quran {
+  margin-top: 100px;
+  margin-bottom: 12px;
+}
+
+.verse-arabic {
+  font-family: "Noto Naskh Arabic";
+  font-size: 18px !important;
+}
+
 .verse {
-  text-align: center;
-  font-size: 60px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  p {
-    font-size: 16px;
-  }
-  @media only screen and (min-width: $cut) {
-    flex-wrap: nowrap;
-    font-size: 75px;
-  }
+  font-size: 14px !important; 
+}
+
+.border-section {
+  color: $main !important;
 }
