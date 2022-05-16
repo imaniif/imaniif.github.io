@@ -10,3 +10,10 @@
 .events {
   margin-top: $margin_top_content !important;
 }
+
+#ring-svg {
+  width: 100px; 
+  stroke: $yellow;
+  fill: $yellow;
+  fill-opacity: 2;
+}
